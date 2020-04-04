@@ -29,14 +29,13 @@ public final class ProtocolTabPlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        this.saveDefaultConfig();
 
         instance = this;
     }
 
     @Override
     public void onEnable() {
-        this.manager = new ProtocolTabManager(this.getConfig().getInt("default-ping", 0));
+        this.manager = new ProtocolTabManager(0);
 
         // Skript hook
         if (this.getServer().getPluginManager().getPlugin("Skript") != null && Skript.isAcceptRegistrations()) {
@@ -52,11 +51,11 @@ public final class ProtocolTabPlugin extends JavaPlugin {
     public void onDisable() {
     }
 
-    protected static ProtocolTabPlugin getInstance() {
+    static ProtocolTabPlugin getInstance() {
         return instance;
     }
 
-    protected ProtocolTabManager getManager() {
+    ProtocolTabManager getManager() {
         return manager;
     }
 
