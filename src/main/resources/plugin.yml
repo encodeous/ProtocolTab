@@ -1,6 +1,0 @@
-name: '${project.name}'
-version: '${project.version}'
-main: 'pl.kacperduras.protocoltab.ProtocolTabPlugin'
-authors: ['Kacper Duras', 'A248']
-database: false
-depend: ['ProtocolLib']
