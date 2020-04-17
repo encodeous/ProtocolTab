@@ -42,7 +42,7 @@ public class TabManager {
     }
     
     public PacketTablist get(Player player) {
-        return tabMap.computeIfAbsent(player.getUniqueId(), PacketTablist::new);
+        return tabMap.computeIfAbsent(player.getUniqueId(), (u) -> new PacketTablist(player));
     }
     
     public void forEach(BiConsumer<UUID, PacketTablist> action) {

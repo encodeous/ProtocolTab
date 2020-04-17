@@ -24,7 +24,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -42,15 +41,15 @@ public class PacketTablist {
 
     private volatile TabItem[] existingSlots = new TabItem[] {};
     private final ConcurrentMap<Integer, TabItem> slots = new ConcurrentHashMap<>();
-    private final UUID uuid;
+    private final Player player;
 
     private volatile String existingHeader;
     private volatile String existingFooter;
     private volatile String header;
     private volatile String footer;
 
-    PacketTablist(UUID uuid) {
-        this.uuid = Objects.requireNonNull(uuid, "UUID must not be null");
+    PacketTablist(Player player) {
+        this.player = Objects.requireNonNull(player, "Player must not be null");
     }
     
     private static PacketContainer makeHeaderFooterContainer(String header, String footer) {
@@ -206,8 +205,7 @@ public class PacketTablist {
     }
     
     public void update() {
-    	Player player = Bukkit.getPlayer(uuid);
-    	if (player == null || !player.isOnline()) {
+    	if (!player.isOnline()) {
     		return;
     	}
 
