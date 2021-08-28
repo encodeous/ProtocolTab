@@ -97,7 +97,7 @@ public class TabItem {
 		return false;
 	}
 
-	public class Builder {
+	public static class Builder {
 
 		private Skin skin;
 		private int ping;
