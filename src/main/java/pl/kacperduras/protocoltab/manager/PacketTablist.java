@@ -66,58 +66,6 @@ public class PacketTablist {
         return packetPlayerInfo;
     }
     
-    private static List<PacketContainer> makeUpdateAlt(List<PacketContainer> result, List<PlayerInfoData> removePlayer, List<PlayerInfoData> addPlayer, List<PlayerInfoData> pingUpdated, List<PlayerInfoData> displayUpdated, TabItem[] existing, TabItem[] update) {
-
-        int largerSize = Math.max(existing.length, update.length);
-        for (int n = 0; n < largerSize; n++) {
-
-        	TabItem previous = (n < existing.length) ? existing[n] : null;
-        	TabItem current = (n < update.length)? update[n] : null; 
-
-        	assert current != null || previous != null;
-        	
-        	if (current != null) {
-        		if (previous == null) {
-        			addPlayer.add(current.makeInfoData(n));
-
-        		} else if (!current.equals(previous)) {
-
-        			boolean changedSkin = !current.getSkin().equals(previous.getSkin());
-        			boolean changedText = !current.getText().equals(previous.getText());
-        			boolean changedPing = current.getPing() != previous.getPing();
-
-        			assert changedSkin || changedText || changedPing;
-
-        			if (changedSkin || changedText && changedPing) {
-        				addPlayer.add(current.makeInfoData(n));
-        				
-        			} else if (changedPing) {
-        				pingUpdated.add(current.makeInfoData(n));
-        				
-        			} else if (changedText) {
-        				displayUpdated.add(current.makeInfoData(n));
-
-        			}
-        		}
-        	} else if (previous != null) {
-				removePlayer.add(previous.makeInfoData(n));
-        	}
-        }
-        if (removePlayer.size() > 0) {
-        	result.add(makeInfoDataContainer(PlayerInfoAction.REMOVE_PLAYER, removePlayer));
-        }
-        if (addPlayer.size() > 0) {
-        	result.add(makeInfoDataContainer(PlayerInfoAction.ADD_PLAYER, addPlayer));
-        }
-        if (pingUpdated.size() > 0) {
-        	result.add(makeInfoDataContainer(PlayerInfoAction.UPDATE_LATENCY, pingUpdated));
-        }
-        if (displayUpdated.size() > 0) {
-        	result.add(makeInfoDataContainer(PlayerInfoAction.UPDATE_DISPLAY_NAME, displayUpdated));
-        }
-        return result;
-    }
-    
     private static List<PacketContainer> makeUpdate(List<PacketContainer> result, List<PlayerInfoData> removePlayer, List<PlayerInfoData> addPlayer, List<PlayerInfoData> pingUpdated, List<PlayerInfoData> displayUpdated, TabItem[] existing, TabItem[] update) {
 
         int largerSize = Math.max(existing.length, update.length);
@@ -178,16 +126,10 @@ public class PacketTablist {
     	List<PlayerInfoData> addPlayer = new ArrayList<>();
     	List<PlayerInfoData> pingUpdated = new ArrayList<>();
     	List<PlayerInfoData> displayUpdated = new ArrayList<>();
-    	boolean experimental = player.getUniqueId().equals(UUID.fromString("ed5f12cd-6007-45d9-a4b9-940524ddaecf"));
     	try {
     		synchronized (this) {
     	    	if (!Arrays.equals(this.existingSlots, slots)) {
-    	    		if (experimental) {
-    	    			makeUpdateAlt(packets, removePlayer, addPlayer, pingUpdated, displayUpdated, this.existingSlots, slots);
-    	    		} else {
-    	    			makeUpdate(packets, removePlayer, addPlayer, pingUpdated, displayUpdated, this.existingSlots, slots);
-    	    		}
-    	    		
+					makeUpdate(packets, removePlayer, addPlayer, pingUpdated, displayUpdated, this.existingSlots, slots);
     	    	}
     	    	if (!Objects.equals(this.existingHeader, header) || !Objects.equals(this.existingFooter, footer)) {
     	    		packets.add(makeHeaderFooterContainer(header, footer));
