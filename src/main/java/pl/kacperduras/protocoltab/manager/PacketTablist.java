@@ -66,7 +66,9 @@ public class PacketTablist {
         return packetPlayerInfo;
     }
     
-    private static List<PacketContainer> makeUpdate(List<PacketContainer> result, List<PlayerInfoData> removePlayer, List<PlayerInfoData> addPlayer, List<PlayerInfoData> pingUpdated, List<PlayerInfoData> displayUpdated, TabItem[] existing, TabItem[] update) {
+    private static List<PacketContainer> makeUpdate(List<PacketContainer> result, List<PlayerInfoData> removePlayer,
+													List<PlayerInfoData> addPlayer, List<PlayerInfoData> pingUpdated,
+													List<PlayerInfoData> displayUpdated, TabItem[] existing, TabItem[] update) {
 
         int largerSize = Math.max(existing.length, update.length);
         for (int n = 0; n < largerSize; n++) {

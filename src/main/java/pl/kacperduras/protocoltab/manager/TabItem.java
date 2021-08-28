@@ -35,7 +35,12 @@ public class TabItem {
 	private volatile int currentIndex;
 	private volatile WrappedGameProfile currentProfile;
 
-	TabItem(Skin skin, int ping, String text) {
+	public TabItem(int ping, String text) {
+		this.skin = Skin.DEFAULT;
+		this.ping = ping;
+		this.text = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(text, "Text must not be null"));
+	}
+	public TabItem(int ping, String text, Skin skin) {
 		this.skin = Objects.requireNonNull(skin, "Skin must not be null");
 		this.ping = ping;
 		this.text = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(text, "Text must not be null"));
@@ -68,6 +73,7 @@ public class TabItem {
 	}
 	
 	private synchronized WrappedGameProfile getProfile(int index) {
+		if(currentProfile == null) return makeProfile(index);
 		return (currentIndex == index) ? currentProfile : makeProfile(index);
 	}
 	
@@ -96,37 +102,4 @@ public class TabItem {
 		}
 		return false;
 	}
-
-	public static class Builder {
-
-		private Skin skin;
-		private int ping;
-		private String text;
-
-		public Builder() {
-			skin = Skin.DEFAULT;
-		}
-
-		public Builder(TabItem slot) {
-			this.skin = slot.skin;
-			this.ping = slot.ping;
-			this.text = slot.text;
-		}
-
-		public Builder text(String text) {
-			this.text = text;
-			return this;
-		}
-
-		public Builder skin(Skin skin) {
-			this.skin = skin;
-			return this;
-		}
-
-		public TabItem build() {
-			return new TabItem(skin, ping, text);
-		}
-
-	}
-
 }
