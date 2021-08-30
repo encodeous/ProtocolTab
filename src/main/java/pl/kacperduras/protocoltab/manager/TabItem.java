@@ -17,6 +17,8 @@ package pl.kacperduras.protocoltab.manager;
 
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bukkit.ChatColor;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
@@ -34,6 +36,7 @@ public class TabItem {
 
 	private volatile int currentIndex;
 	private volatile WrappedGameProfile currentProfile;
+	private static ConcurrentHashMap<Integer, UUID> cachedIds = new ConcurrentHashMap<>();
 
 	public TabItem(int ping, String text) {
 		this.skin = Skin.DEFAULT;
@@ -59,11 +62,11 @@ public class TabItem {
 	}
 	
 	private WrappedGameProfile makeProfile(int index) {
-		
+		cachedIds.putIfAbsent(index, UUID.randomUUID());
 		String name = String.format("%03d", index) + "|UpdateMC"; // Starts with 00 so they are sorted in
 		// alphabetical order and appear in the right order.
 
-		WrappedGameProfile profile = new WrappedGameProfile(UUID.randomUUID(), name);
+		WrappedGameProfile profile = new WrappedGameProfile(cachedIds.get(index), name);
 		profile.getProperties().put(Skin.TEXTURE_KEY, skin.getProperty());
 		
 		currentIndex = index;

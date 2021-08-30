@@ -90,7 +90,7 @@ public class PacketTablist {
 
         			assert changedSkin || changedText || changedPing;
 
-        			if (changedSkin || changedText && changedPing) {
+        			if (changedSkin || (changedText && changedPing)) {
         				removePlayer.add(previous.makeInfoData(n));
         				addPlayer.add(current.makeInfoData(n));
         				
@@ -99,7 +99,6 @@ public class PacketTablist {
         				
         			} else if (changedText) {
         				displayUpdated.add(current.makeInfoData(n));
-
         			}
         		}
         	} else if (previous != null) {
