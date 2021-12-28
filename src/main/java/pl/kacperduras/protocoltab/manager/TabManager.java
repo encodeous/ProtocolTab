@@ -20,8 +20,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.keenant.tabbed.skin.SkinFetcher;
 
-import lombok.Getter;
-
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,8 +29,11 @@ import java.util.logging.Logger;
 
 public class TabManager {
 
-	@Getter
-	private final SkinFetcher skinFetcher;
+    public SkinFetcher getSkinFetcher() {
+        return skinFetcher;
+    }
+
+    private final SkinFetcher skinFetcher;
     private final Map<UUID, PacketTablist> tabMap = new ConcurrentHashMap<>();
     private static volatile Logger logger;
     

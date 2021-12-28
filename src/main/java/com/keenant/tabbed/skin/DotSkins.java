@@ -64,7 +64,7 @@ public class DotSkins {
     /**
      * Get a cool skin based on a chat colour (grey square with a colored dot).
      * 
-     * @param color the colour to use
+     * @param colour the colour to use
      * @return a colored dot skin
      */
     public static Skin getDot(ChatColor colour) {

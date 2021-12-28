@@ -13,7 +13,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
     	<maven.compiler.target>1.8</maven.compiler.target>
-    	<lombok.version>1.18.12</lombok.version>
     	<arimapi.version>0.7.2-SNAPSHOT</arimapi.version>
 		<protocollib.version>4.7.0</protocollib.version>
     	<spigot.version>1.8.8-R0.1-SNAPSHOT</spigot.version>
@@ -112,11 +111,6 @@
 			<version>${protocollib.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
-		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -126,7 +120,7 @@
 		</repository>
 		<repository>
 			<id>dmulloy2-repo</id>
-			<url>http://repo.dmulloy2.net/nexus/repository/public/</url>
+			<url>https://repo.dmulloy2.net/repository/public/</url>
 		</repository>
 	</repositories>
 </project>
