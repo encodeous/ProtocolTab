@@ -63,7 +63,7 @@ public class TabItem {
 	
 	private WrappedGameProfile makeProfile(int index) {
 		cachedIds.putIfAbsent(index, UUID.randomUUID());
-		String name = String.format("%03d", index) + "|UpdateMC"; // Starts with 00 so they are sorted in
+		String name = String.format("~%03d", index) + "|UpdateMC"; // Starts with 00 so they are sorted in
 		// alphabetical order and appear in the right order.
 
 		WrappedGameProfile profile = new WrappedGameProfile(cachedIds.get(index), name);
